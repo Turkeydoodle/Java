@@ -26,7 +26,20 @@ public class TicTacToe {
         System.out.println(grid[2][0] + " | " + grid[2][1] + " | " + grid[2][2]);
     }
 
-    public static Boolean checkWin() {
+    public static Boolean checkWin(int[][] winConditions, int[] playerpieces) {
+        for (int[] condition : winConditions) {
+            boolean hasAllThree = true;
+            for (int square : condition) {
+                if (!isused(playerpieces, square)) {
+                    hasAllThree = false;
+                    break;
+                }
+            }
+            if (hasAllThree) {
+                System.out.println("Win detected!");
+                return true;
+            }
+        }
         return false;
     }
 
@@ -42,8 +55,8 @@ public class TicTacToe {
     public static void main(String[] arg) {
         int[][] grid = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
         String[][] stringgrid = { { " ", " ", "" }, { " ", " ", "" }, { " ", " ", "" } };
-        int[][] winConditions = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 },
-                { 1, 5, 9 }, { 7, 5, 3 } };
+        int[][] winConditions = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 },
+                { 0, 4, 8 }, { 6, 4, 2 } };
         int[] playerpieces = {};
         int[] player2pieces = {};
         int turnnumber = 1;
@@ -51,9 +64,6 @@ public class TicTacToe {
         Scanner input = new Scanner(System.in);
         Boolean winDetected = false;
         while (!winDetected) {
-            if (checkwin()) {
-                break;
-            }
             System.out.println("Your board:");
             printstringgrid(stringgrid);
             System.out.println("Coordinate Board:");
@@ -72,6 +82,11 @@ public class TicTacToe {
                         if (!isused(playerpieces, userSquare) && !isused(player2pieces, userSquare)) {
                             playerpieces = addValue(playerpieces, userSquare);
                             stringgrid[userSquare / 3][userSquare % 3] = "X";
+                            if (checkWin(winConditions, playerpieces)) {
+                                System.out.println("Player 1 wins!");
+                                winDetected = true;
+                                break;
+                            }
                         } else {
                             System.out.println("Space occupied! You gave up your turn!");
                         }
@@ -79,17 +94,18 @@ public class TicTacToe {
                         if (!isused(playerpieces, userSquare) && !isused(player2pieces, userSquare)) {
                             player2pieces = addValue(player2pieces, userSquare);
                             stringgrid[userSquare / 3][userSquare % 3] = "O";
+                            if (checkWin(winConditions, player2pieces)) {
+                                System.out.println("Player 2 wins!");
+                                winDetected = true;
+                                break;
+                            }
                         } else {
                             System.out.println("Space occupied! You gave up your turn!");
                         }
                     }
-                } else {
-                    System.out.println("Your input is not valid!");
+                    turnnumber += 1;
                 }
-            } else {
-                System.out.println("Your input is not valid!");
             }
-            turnnumber += 1;
         }
     }
 }

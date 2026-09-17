@@ -25,6 +25,6 @@ public class MyProgram {
         System.out.println("What is your name?");
         String nameinput = input.nextLine();
         System.out.println("Hello there, " + nameinput + "! It is nice to meet you!");
-
+        input.close();
     }
 }

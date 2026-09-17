@@ -17,7 +17,7 @@ public class ConwaysGame {
         }
     }
 
-    public static Boolean underOrOver(String[][] array, int row, int column) {
+    public static Boolean checkneighbors(String[][] array, int row, int column) {
         int max = 19;
         int numberOfNeighbors = 0;
         if ((column - 1) >= 0 && array[row][column - 1].equals("X")) {
@@ -44,44 +44,14 @@ public class ConwaysGame {
         if ((row - 1) >= 0 && (column + 1) <= max && array[row - 1][column + 1].equals("X")) {
             numberOfNeighbors += 1;
         }
-        if (numberOfNeighbors < 2 || numberOfNeighbors > 3) {
-            return true;
-        } else {
+        if ((array[row][column].equals("X")) && (numberOfNeighbors < 2 || numberOfNeighbors > 3)) {
             return false;
-        }
-    }
-
-    public static Boolean reproduce(String[][] array, int row, int column) {
-        int max = 19;
-        int numberOfNeighbors = 0;
-        if ((column - 1) >= 0 && array[row][column - 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((column + 1) <= max && array[row][column + 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row - 1) >= 0 && array[row - 1][column].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row + 1) <= max && array[row + 1][column].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row + 1) <= max && (column - 1) >= 0 && array[row + 1][column - 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row + 1) <= max && (column + 1) <= max && array[row + 1][column + 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row - 1) >= 0 && (column - 1) >= 0 && array[row - 1][column - 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if ((row - 1) >= 0 && (column + 1) <= max && array[row - 1][column + 1].equals("X")) {
-            numberOfNeighbors += 1;
-        }
-        if (numberOfNeighbors == 2) {
+        } else if ((array[row][column].equals(" ")) && (numberOfNeighbors == 3)) {
             return true;
-        } else {
+        } else if ((array[row][column].equals(" ")) && (numberOfNeighbors != 3)) {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -92,20 +62,25 @@ public class ConwaysGame {
                 grid[i][j] = " ";
             }
         }
-        grid[10][10] = "X";
-        grid[11][10] = "X";
-        grid[11][11] = "X";
-        grid[10][11] = "X";
-        grid[11][9] = "X";
+        grid[10][5] = "X";
+        grid[10][7] = "X";
+        grid[9][7] = "X";
+        grid[8][9] = "X";
+        grid[7][9] = "X";
+        grid[6][9] = "X";
+        grid[7][11] = "X";
+        grid[6][11] = "X";
+        grid[5][11] = "X";
+        grid[6][12] = "X";
         while (true) {
             printgrid(grid);
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    if (underOrOver(grid, i, j)) {
+                    if (checkneighbors(grid, i, j)) {
+                        grid[i][j] = "X";
+                    } else {
                         grid[i][j] = " ";
                     }
-                    reproduce(grid, i, j);
-                    grid[i][j] = "X";
                 }
             }
             Thread.sleep(1000);

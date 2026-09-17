@@ -54,6 +54,7 @@ public class Calculator {
             if (operator.equals("sqrt")) {
                 Double answer = sqrt(number1);
                 System.out.println("The square root of " + number1 + " is " + answer);
+                input.close();
             }
         }
     }

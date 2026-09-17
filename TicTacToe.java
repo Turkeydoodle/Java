@@ -105,6 +105,7 @@ public class TicTacToe {
                     }
                     turnnumber += 1;
                 }
+                input.close();
             }
         }
     }

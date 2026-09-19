@@ -3,9 +3,9 @@ package Java;
 import java.util.Scanner;
 
 public class ConwaysModified {
-    private int rows = 20;
-    private int cols = 20;
-    private boolean[][] grid;
+    int rows = 20;
+    int cols = 20;
+    public boolean[][] grid;
 
     public ConwaysModified() {
         grid = new boolean[rows][cols];
@@ -40,21 +40,22 @@ public class ConwaysModified {
         return count;
     }
 
-    public void main(String[] arg) throws InterruptedException {
+    public static void main(String[] arg) throws InterruptedException {
+        ConwaysGame game = new ConwaysGame();
         Scanner input = new Scanner(System.in);
         for (int i = 1; i < 200; i++) {
             int row = (int) (Math.random() * 19);
             int column = (int) (Math.random() * 19);
-            this.grid[row][column] = true;
+            game.grid[row][column] = true;
         }
         while (true) {
-            printgrid(this.grid);
+            printgrid(game.grid);
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     if ((checkneighbors(i, j) >= 2) || (checkneighbors(i, j) <= 3)) {
-                        this.grid[i][j] = true;
+                        game.grid[i][j] = true;
                     } else {
-                        this.grid[i][j] = false;
+                        game.grid[i][j] = false;
                     }
                 }
             }

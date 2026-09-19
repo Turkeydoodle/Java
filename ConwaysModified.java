@@ -41,7 +41,7 @@ public class ConwaysModified {
         return count;
     }
 
-    public static void main(String[] arg) throws InterruptedException {
+    public void main(String[] arg) throws InterruptedException {
         Scanner input = new Scanner(System.in);
         for (int i = 1; i < 200; i++) {
             int row = (int) (Math.random() * 19);
@@ -49,10 +49,10 @@ public class ConwaysModified {
             this.grid[row][column] = true;
         }
         while (true) {
-            printgrid(grid);
+            printgrid(this.grid);
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    if (checkneighbors(i, j)) {
+                    if ((checkneighbors(i, j) >= 2) || (checkneighbors(i, j) <= 3)) {
                         this.grid[i][j] = true;
                     } else {
                         this.grid[i][j] = false;

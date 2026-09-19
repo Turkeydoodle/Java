@@ -1,6 +1,5 @@
 package Java;
 
-import java.lang.Thread;
 import java.util.Scanner;
 
 public class ConwaysModified {
@@ -12,7 +11,7 @@ public class ConwaysModified {
         grid = new boolean[rows][cols];
     }
 
-    public void printgrid(Boolean[][] array) {
+    public void printgrid(boolean[][] array) {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 if (grid[i][j] == true) {

@@ -1,8 +1,8 @@
 import javax.swing.JFrame;
 
 public class Frame {
-    public static void main() {
-        JFrame frame = new JFrame("Simple Platformer");
+    public static void start() {
+        JFrame frame = new JFrame("Catch the Coin!");
         Platformer game = new Platformer();
         frame.add(game);
         frame.setSize(800, 600);

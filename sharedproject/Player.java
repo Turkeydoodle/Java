@@ -1,5 +1,6 @@
+import java.awt.event.KeyEvent;
+
 public class Player {
-    private Timer timer;
     public int playerX, playerY;
     public int playerWidth, playerHeight;
     private int velocityX, velocityY;
@@ -12,20 +13,37 @@ public class Player {
     private Coin[] coins = { new Coin(600, 300) };
 
     public Player() {
-        playerX = 50;
-        playerY = 300;
-        playerWidth = 50;
-        playerHeight = 50;
+        this.playerX = 50;
+        this.playerY = 300;
+        playerWidth = 25;
+        playerHeight = 25;
         velocityX = 0;
         velocityY = 0;
         onGround = true;
+    }
+
+    public int getX() {
+        return playerX;
+    }
+
+    public int getY() {
+        return playerY;
+    }
+
+    public void changeX(int x) {
+        playerX = x;
+    }
+
+    public void changeY(int y) {
+        playerY = y;
+    }
 
     private void update() {
         playerX += velocityX;
         playerY += velocityY;
 
-        if (playerY + playerHeight >= 350) { // Ground collision
-            playerY = 350 - playerHeight;
+        if (playerY + playerHeight >= 325) { // Ground collision
+            playerY = 325 - playerHeight;
             velocityY = 0;
             onGround = true;
         } else {

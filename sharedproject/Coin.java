@@ -7,7 +7,7 @@ public class Coin extends JComponent {
     public int coinSide;
 
     public Coin(int coinX, int coinY) {
-        coinSide = 50;
+        coinSide = 25;
         this.coinX = coinX;
         this.coinY = coinY;
     }
@@ -18,5 +18,13 @@ public class Coin extends JComponent {
 
     public int getY() {
         return coinY;
+    }
+
+    public void changeX(int newX) {
+        coinX = newX;
+    }
+
+    public void changeY(int newY) {
+        coinY = newY;
     }
 }

@@ -15,16 +15,19 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
     private final int moveSpeed = 5;
     private final int jumpStrength = 15;
     private int numCoins = 1;
-    public int coinSide = 50;
-    private Coin[] coins = { new Coin(600, 300) };
+    public int coinSide = 25;
+    private Player player = new Player();
+    private Obstacle obstacle = new Obstacle(250, 250, 40, 150);
+    private Coin coin = new Coin(600, 300);
+    private int levelnum = 1;
 
     public Platformer() {
         timer = new Timer(20, this);
         timer.start();
         playerX = 50;
         playerY = 300;
-        playerWidth = 50;
-        playerHeight = 50;
+        playerWidth = 25;
+        playerHeight = 25;
         velocityX = 0;
         velocityY = 0;
         onGround = true;
@@ -33,23 +36,107 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
     }
 
+    private void checkCoinCollision() {
+        int playerLeft = playerX;
+        int playerRight = playerX + playerWidth;
+        int playerTop = playerY;
+        int playerBottom = playerY + playerHeight;
+
+        int coinLeft = coin.getX();
+        int coinRight = coin.getX() + coinSide;
+        int coinTop = coin.getY();
+        int coinBottom = coin.getY() + coinSide;
+
+        if (playerRight > coinLeft && playerLeft < coinRight && playerBottom > coinTop && playerTop < coinBottom) {
+            System.out.println("Coin Collison detected.");
+            levelnum += 1;
+            if (levelnum % 2 == 0) {
+                coin.changeX(50);
+            } else {
+                coin.changeX(600);
+            }
+        }
+    }
+
+    public void checkObstacleCollision(int levelnum) {
+        int playerLeft = playerX;
+        int playerRight = playerX + playerWidth;
+        int playerTop = playerY;
+        int playerBottom = playerY + playerHeight;
+
+        int obLeft = obstacle.getX();
+        int obRight = obstacle.getX() + obstacle.getWidth();
+        int obTop = obstacle.getY();
+        int obBottom = obstacle.getY() + obstacle.getHeight();
+        if (levelnum != 1) {
+            if (playerRight > obLeft && playerLeft < obRight && playerBottom > obTop && playerTop < obBottom) {
+                System.out.println("Obstacle Collison detected.");
+                if (levelnum == 2) {
+                    player.changeX(600);
+                    playerX = player.getX();
+                } else {
+                    player.changeX(50);
+                    playerX = player.getX();
+                }
+            }
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.CYAN);
-        g.fillRect(0, 0, getWidth(), getHeight()); // Background
-        g.setColor(Color.GREEN);
-        g.fillRect(0, 350, getWidth(), 50); // Ground
-        g.setColor(Color.RED);
-        g.fillRect(playerX, playerY, playerWidth, playerHeight); // Player
-        g.setColor(Color.yellow);
-        for (Coin coin : coins) {
-            g.fillOval(coin.getX(), coin.getY(), coinSide, coinSide);
-        } // Coin
+        if (levelnum == 1) {
+            super.paintComponent(g);
+            g.setColor(Color.CYAN);
+            g.fillRect(0, 0, getWidth(), getHeight()); // Background
+            g.setColor(Color.GREEN);
+            g.fillRect(0, 350, getWidth(), 50); // Ground
+            g.setColor(Color.RED);
+            g.fillRect(playerX, playerY, playerWidth, playerHeight); // Player
+            g.setColor(Color.yellow);
+            g.fillOval(coin.getX(), coin.getY(), coinSide, coinSide); // Coin
+            g.setColor(Color.BLACK);
+            g.drawString("Level 1", 20, 30);
+        } else if (levelnum == 2) {
+            super.paintComponent(g);
+            g.setColor(Color.BLUE);
+            g.fillRect(0, 0, getWidth(), getHeight()); // Background
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 350, getWidth(), 50); // Ground
+            g.setColor(Color.RED);
+            g.fillRect(playerX, playerY, playerWidth, playerHeight); // Player
+            g.setColor(Color.yellow);
+            g.fillOval(coin.coinX, coin.getY(), coinSide, coinSide); // Coin
+            g.setColor(Color.ORANGE);
+            g.fillRect(obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
+            g.setColor(Color.WHITE);
+            g.drawString("Level 2", 20, 30);
+        } else if (levelnum == 3) {
+            super.paintComponent(g);
+            g.setColor(Color.RED);
+            g.fillRect(0, 0, getWidth(), getHeight()); // Background
+            g.setColor(Color.BLUE);
+            g.fillRect(0, 350, getWidth(), 50); // Ground
+            g.setColor(Color.GREEN);
+            g.fillRect(playerX, playerY, playerWidth, playerHeight); // Player
+            g.setColor(Color.yellow);
+            g.fillOval(coin.getX(), coin.getY(), coinSide, coinSide); // Coin
+            g.setColor(Color.BLACK);
+            g.fillRect(obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
+            g.setColor(Color.WHITE);
+            g.drawString("Level 3", 20, 30);
+        } else {
+            super.paintComponent(g);
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.WHITE);
+            g.drawString("The End!", 400, 300);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        checkCoinCollision();
+        checkObstacleCollision(levelnum);
         update();
         repaint();
     }
@@ -93,10 +180,6 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
             velocityX = 0;
         }
-    }if(coinX=playerX&&coinY==playerY)
-
-    {
-
     }
 
     @Override

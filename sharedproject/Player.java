@@ -64,6 +64,11 @@ public class Player {
             velocityX = moveSpeed;
         }
 
+        if (key == KeyEvent.VK_UP && onGround) {
+            velocityY = -jumpStrength;
+            onGround = false;
+        }
+
         if (key == KeyEvent.VK_SPACE && onGround) {
             velocityY = -jumpStrength;
             onGround = false;

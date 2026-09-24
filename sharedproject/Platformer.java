@@ -18,6 +18,8 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
     public int coinSide = 25;
     private Player player = new Player();
     private Obstacle obstacle = new Obstacle(250, 250, 40, 150);
+    private Obstacle obstacle2 = new Obstacle(400, 275, 50, 125);
+    private Obstacle obstacle3 = new Obstacle(500, 250, 100, 25);
     private Coin coin = new Coin(600, 300);
     private int levelnum = 1;
 
@@ -64,10 +66,20 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
         int playerTop = playerY;
         int playerBottom = playerY + playerHeight;
 
+        int ob2Left = obstacle2.getX();
+        int ob2Right = obstacle2.getX() + obstacle2.getWidth();
+        int ob2Top = obstacle2.getY();
+        int ob2Bottom = obstacle2.getY() + obstacle2.getHeight();
+
         int obLeft = obstacle.getX();
         int obRight = obstacle.getX() + obstacle.getWidth();
         int obTop = obstacle.getY();
         int obBottom = obstacle.getY() + obstacle.getHeight();
+
+        int ob3Left = obstacle3.getX();
+        int ob3Right = obstacle3.getX() + obstacle3.getWidth();
+        int ob3Top = obstacle3.getY();
+        int ob3Bottom = obstacle3.getY() + obstacle3.getHeight();
         if (levelnum != 1) {
             if (playerRight > obLeft && playerLeft < obRight && playerBottom > obTop && playerTop < obBottom) {
                 System.out.println("Obstacle Collison detected.");
@@ -75,6 +87,18 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
                     player.changeX(600);
                     playerX = player.getX();
                 } else {
+                    player.changeX(50);
+                    playerX = player.getX();
+                }
+            }
+            if (levelnum == 3) {
+                if (playerRight > ob2Left && playerLeft < ob2Right && playerBottom > ob2Top && playerTop < ob2Bottom) {
+                    System.out.println("Obstacle Collison detected.");
+                    player.changeX(50);
+                    playerX = player.getX();
+                } else if (playerRight > ob3Left && playerLeft < ob3Right && playerBottom > ob3Top
+                        && playerTop < ob3Bottom) {
+                    System.out.println("Obstacle Collison detected.");
                     player.changeX(50);
                     playerX = player.getX();
                 }
@@ -122,6 +146,8 @@ public class Platformer extends JPanel implements ActionListener, KeyListener {
             g.fillOval(coin.getX(), coin.getY(), coinSide, coinSide); // Coin
             g.setColor(Color.BLACK);
             g.fillRect(obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
+            g.fillRect(obstacle2.getX(), obstacle2.getY(), obstacle2.getWidth(), obstacle2.getHeight());
+            g.fillRect(obstacle3.getX(), obstacle3.getY(), obstacle3.getWidth(), obstacle3.getHeight());
             g.setColor(Color.WHITE);
             g.drawString("Level 3", 20, 30);
         } else {
